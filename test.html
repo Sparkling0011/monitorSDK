@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Frontend SDK Test</title>
+    <script type="module" async>
+      import SDK from "./dist/index.js";
+      SDK.init({
+        pid: "7b4c872d-bef3-443a-b69c-b433cbbb15b0",
+        enableBehavior: true,
+        enablePerformance: true,
+      });
+    </script>
+  </head>
+  <body>
+    <h1>Frontend SDK Test</h1>
+
+    <!-- Generate a JavaScript error -->
+    <button onclick="generateError()">Generate JavaScript error</button>
+
+    <!-- Generate a promise error -->
+    <button onclick="generatePromiseError()">Generate promise error</button>
+
+    <!-- Send a GET request to a non-existing URL -->
+    <button onclick="generateNetworkError()">Generate network error</button>
+
+    <button onclick="generateXHRError()">Generate XHR network error</button>
+
+    <button onclick="generateRError()">Generate Resource error</button>
+
+    <!-- Load a non-existing resource -->
+    <!-- <img src="non-existing-resource.png" alt="Non-existing resource" /> -->
+
+    <script>
+      function generateError() {
+        const a = b;
+      }
+
+      function generatePromiseError() {
+        Promise.reject(new Error("Promise error"));
+      }
+
+      function generateNetworkError() {
+        fetch("http://non-existing-url.com")
+          .then((response) => response.text())
+          .then((data) => console.log(data))
+          .catch((error) => console.error(error));
+      }
+
+      function generateXHRError() {
+        const xhr = new XMLHttpRequest();
+        const url = "https://example.com/api/data";
+
+        xhr.open("GET", url);
+        xhr.onload = function () {
+          if (xhr.status === 200) {
+            console.log("Response:", xhr.response);
+          } else {
+            console.log("Error:", xhr.statusText);
+          }
+        };
+        xhr.send();
+      }
+      function generateRError() {
+        let img = new Image();
+        img.src = "non-existing - resource.png";
+        document.body.append(img);
+      }
+    </script>
+  </body>
+</html>
