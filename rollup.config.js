@@ -4,7 +4,7 @@ import typescript from "@rollup/plugin-typescript";
 export default defineConfig({
   input: "./src/index.ts",
   output: {
-    file: "dist/index.js",
+    file: "lib/index.js",
     format: "es"
   },
   plugins: [typescript(), terser()],

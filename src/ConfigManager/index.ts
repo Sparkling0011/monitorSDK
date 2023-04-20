@@ -7,7 +7,7 @@ import {
 } from "./type";
 
 export const initConfig: InitConfig = {
-  url: "http://localhost:8000/api/log",
+  url: "http://www.nebulanimble.site:8000/api/log",
 };
 
 export const errorConfig: ErrorConfig = {
