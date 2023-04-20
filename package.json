@@ -5,6 +5,10 @@
   "main": "./lib/index.ts",
   "types": "./main.d.ts",
   "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Sparkling0011/monitorSDK"
+  },
   "scripts": {
     "build": "rollup --config"
   },
