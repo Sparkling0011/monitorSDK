@@ -10,7 +10,7 @@ import { configManager } from "./ConfigManager";
 function createSDK(configManager: ConfigManger) {
   const monitors: Array<monitorType> = [InjectErrorMonitor()];
 
-  this.init = function (userConfig: UserConfig) {
+  function init(userConfig: UserConfig) {
     configManager.mergeConfig(userConfig);
     let config = configManager.getConfig();
 
@@ -22,9 +22,12 @@ function createSDK(configManager: ConfigManger) {
     } else {
       console.log("请输入必要的配置pid");
     }
+  }
+  return {
+    init,
   };
 }
 
-const SDK = new createSDK(configManager);
+const SDK = createSDK(configManager);
 
 export default SDK;
