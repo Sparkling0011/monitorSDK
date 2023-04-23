@@ -50,8 +50,8 @@ export function report(errorLogList = []) {
         "error",
         2,
         {
-          desc,
-          error_no: errorName,
+          ...desc,
+          error_name: errorName,
           url: `${location.host}${location.pathname}`,
         },
         {}
