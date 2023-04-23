@@ -15,7 +15,6 @@ function createSDK(configManager: ConfigManger) {
     let config = configManager.getConfig();
 
     if (config.pid) {
-      console.log(config);
       if (config.enablePerformance) monitors.push(InjectPerfMonitor());
       if (config.enableBehavior) monitors.push(InjectUserBehaviorMonitor());
       monitors.forEach((monitor) => monitor.start());

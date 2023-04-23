@@ -4,7 +4,7 @@ import {
   ERROR_TRY_CATCH,
   ERROR_XHR,
   LOAD_ERROR_TYPE,
-} from "../constants";
+} from "../constants/index";
 
 /**
  * 生成 runtime 错误日志
@@ -39,8 +39,11 @@ export function formatRuntimerError(
 export function formatLoadError(errorTarget) {
   return {
     type: LOAD_ERROR_TYPE[errorTarget.nodeName.toUpperCase()],
-    desc: errorTarget.baseURI + "@" + (errorTarget.src || errorTarget.href),
-    stack: "no stack",
+    desc: {
+      baseURI: errorTarget.baseURI,
+      url: errorTarget.src,
+      statusCode: errorTarget.naturalWidth === 0 ? 404 : 200, // 判断资源是否存在
+    },
   };
 }
 
@@ -48,8 +51,8 @@ export function formatPromiseError(event) {
   return {
     // type: event.type,
     type: ERROR_RUNTIME,
-    desc: event.reason,
-    stack: "no stack",
+    desc: event.reason.message,
+    stack: event.reason.stack,
   };
 }
 

@@ -1,4 +1,4 @@
-import { configManager } from "../ConfigManager";
+import { configManager } from "../ConfigManager/index";
 import rule from "./rule";
 
 /**
@@ -39,22 +39,16 @@ export const log = (type = "", code, detail = {}, extra = {}) => {
   // 上报数据
   let path;
   if (type === "error") {
-    path = "/monitor";
+    path = "/error";
   } else if (type === "perf") {
     path = "/perf";
   }
   try {
     const img = new Image();
+    if (config.is_test) config.url = "http://localhost:8000/api/log";
     img.src = ""
       .concat(config.url + path, "?d=")
       .concat(encodeURIComponent(JSON.stringify(logInfo)));
-    // fetch(config.url + path, {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify(logInfo),
-    // });
   } catch (e) {
     console.log(e);
   }

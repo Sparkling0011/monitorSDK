@@ -1,4 +1,4 @@
-import { hookMethod } from "../utils";
+import { hookMethod } from "../utils/index";
 import { configInit, handleError } from "../sender/error";
 import {
   formatFetchError,
@@ -7,8 +7,8 @@ import {
   formatRuntimerError,
   formatXHRError,
 } from "../builder/errorBuilder";
-import { JS_TRACKER_ERROR_DISPLAY_MAP } from "../constants";
-import { debugLogger, detailAdapter, log } from "../sender";
+import { JS_TRACKER_ERROR_DISPLAY_MAP } from "../constants/index";
+import { debugLogger, detailAdapter, log } from "../sender/index";
 import {
   ERROR_FETCH,
   ERROR_XHR,
@@ -16,7 +16,7 @@ import {
   ERROR_IMAGE,
   ERROR_SCRIPT,
   ERROR_STYLE,
-} from "../constants";
+} from "../constants/index";
 
 type payloadType = RequestInit & ResponseInit & { url: string };
 
@@ -49,14 +49,12 @@ export function report(errorLogList = []) {
       log(
         "error",
         2,
-        detailAdapter(type, {
-          error_no: errorName,
-          url: `${location.host}${location.pathname}`,
-        }),
         {
           desc,
-          stack,
-        }
+          error_no: errorName,
+          url: `${location.host}${location.pathname}`,
+        },
+        {}
       );
     } else {
       log(
@@ -102,7 +100,6 @@ export function InjectErrorMonitor() {
     window.addEventListener(
       "error",
       (e) => {
-        console.log("resource error");
         let target = e.target || e.srcElement;
         let isElementTarget = target instanceof HTMLElement;
         if (!isElementTarget) return false;
