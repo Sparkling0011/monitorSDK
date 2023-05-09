@@ -7,7 +7,7 @@ import {
   formatRuntimerError,
   formatXHRError,
 } from "../builder/errorBuilder";
-import { JS_TRACKER_ERROR_DISPLAY_MAP } from "../constants/index";
+import { ERROR_VIDEO, JS_TRACKER_ERROR_DISPLAY_MAP } from "../constants/index";
 import { debugLogger, detailAdapter, log } from "../sender/index";
 import {
   ERROR_FETCH,
@@ -44,15 +44,16 @@ export function report(errorLogList = []) {
       type === ERROR_AUDIO ||
       type === ERROR_IMAGE ||
       type === ERROR_SCRIPT ||
-      type === ERROR_STYLE
+      type === ERROR_STYLE ||
+      type === ERROR_VIDEO
     ) {
       log(
         "error",
         2,
         {
-          ...desc,
           error_name: errorName,
-          url: `${location.host}${location.pathname}`,
+          ...desc,
+          type,
         },
         {}
       );

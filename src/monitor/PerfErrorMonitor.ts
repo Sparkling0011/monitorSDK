@@ -1,4 +1,4 @@
-import { debugLogger, log } from "../sender";
+import { debugLogger, log } from "../sender/index";
 
 export function InjectPerfMonitor() {
   function start() {
@@ -9,17 +9,19 @@ export function InjectPerfMonitor() {
       console.log("你的浏览器不支持 performance 接口");
       return;
     }
-    let times = performance.getEntriesByType("navigation")[0].toJSON();
+    window.onload = () => {
+      let times = performance.getEntriesByType("navigation")[0].toJSON();
 
-    debugLogger("发送页面性能指标数据, 上报内容 => ", {
-      ...times,
-      url: `${window.location.host}${window.location.pathname}`,
-    });
+      debugLogger("发送页面性能指标数据, 上报内容 => ", {
+        ...times,
+        url: `${window.location.host}${window.location.pathname}`,
+      });
 
-    log("perf", 4, {
-      ...times,
-      url: `${window.location.host}${window.location.pathname}`,
-    });
+      log("perf", 4, {
+        ...times,
+        url: `${window.location.host}${window.location.pathname}`,
+      });
+    };
   }
   return { start };
 }
