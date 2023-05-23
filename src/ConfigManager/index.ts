@@ -20,7 +20,7 @@ export const errorConfig: ErrorConfig = {
 let config: Config = {
   ...initConfig,
   pid: undefined,
-  is_test: true,
+  is_test: false,
   getPageType: (location = window.location) => {
     return `${location.host}${location.pathname}`;
   },
